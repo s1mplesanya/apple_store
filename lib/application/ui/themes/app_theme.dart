@@ -7,10 +7,11 @@ abstract class AppTheme {
       brightness: Brightness.dark,
       scaffoldBackgroundColor: AppColors.background,
       fontFamily: 'Poppins',
-      // appBarTheme: const AppBarTheme(
-      //   backgroundColor: AppColors.background,
-      //   surfaceTintColor: AppColors.backgroundSecond,
-      // ),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: AppColors.background,
+        surfaceTintColor: AppColors.black,
+        foregroundColor: AppColors.black,
+      ),
       // textTheme: const TextTheme(
       //   bodyLarge: TextStyle(color: AppColors.gray2),
       //   bodyMedium: TextStyle(color: AppColors.gray2),
@@ -48,6 +49,20 @@ abstract class AppTheme {
       //     borderRadius: BorderRadius.circular(20),
       //   ),
       // ),
+    );
+  }
+
+  static ButtonStyle mainButtonStyle(BuildContext context) {
+    return const ButtonStyle(
+      backgroundColor: MaterialStatePropertyAll(AppColors.black),
+      padding: MaterialStatePropertyAll(
+        EdgeInsets.symmetric(vertical: 10),
+      ),
+      shape: MaterialStatePropertyAll(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(17)),
+        ),
+      ),
     );
   }
 }
