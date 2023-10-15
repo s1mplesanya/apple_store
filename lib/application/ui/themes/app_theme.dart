@@ -9,7 +9,7 @@ abstract class AppTheme {
       fontFamily: 'Poppins',
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.background,
-        surfaceTintColor: AppColors.black,
+        surfaceTintColor: Colors.transparent,
         foregroundColor: AppColors.black,
       ),
       // textTheme: const TextTheme(
@@ -60,7 +60,7 @@ abstract class AppTheme {
       ),
       shape: MaterialStatePropertyAll(
         RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(17)),
+          borderRadius: BorderRadius.all(Radius.circular(37)),
         ),
       ),
     );

@@ -90,67 +90,66 @@ class _ShopListItemWidget extends StatelessWidget {
     final model = context.read<MainScreenModel>();
     final config = context.read<MainScreenModel>().shopList[index];
 
-    return GestureDetector(
-      onTap: () => model.openItemDetailView(context, index),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(13),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
-          child: Column(
-            children: [
-              _ShopItemColorsWidget(config: config),
-              const SizedBox(
-                height: 15,
-              ),
-              SizedBox(
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(13),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
+        child: Column(
+          children: [
+            _ShopItemColorsWidget(config: config),
+            const SizedBox(
+              height: 15,
+            ),
+            Hero(
+              tag: config.imagesUrls[0],
+              child: SizedBox(
                 height: 83,
                 child: CachedNetworkImage(
                   imageUrl: config.imagesUrls[0],
                 ),
               ),
-              const SizedBox(
-                height: 9,
+            ),
+            const SizedBox(
+              height: 9,
+            ),
+            DecoratedBox(
+              decoration: BoxDecoration(
+                color: AppColors.background2,
+                borderRadius: BorderRadius.circular(7),
               ),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: AppColors.background2,
-                  borderRadius: BorderRadius.circular(7),
-                ),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
-                  child: Text(
-                    config.year,
-                    style: AppTextStyle.itemYearStyle(context),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 1,
-              ),
-              Text(
-                config.title,
-                style: AppTextStyle.itemTitleStyle(context),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton(
-                  style: AppTheme.mainButtonStyle(context),
-                  onPressed: () {},
-                  child: Text(
-                    'Detail',
-                    style: AppTextStyle.mainButtonTextStyle(context),
-                  ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
+                child: Text(
+                  config.year,
+                  style: AppTextStyle.itemYearStyle(context),
                 ),
               ),
-            ],
-          ),
+            ),
+            const SizedBox(
+              height: 1,
+            ),
+            Text(
+              config.title,
+              style: AppTextStyle.itemTitleStyle(context),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton(
+                style: AppTheme.mainButtonStyle(context),
+                onPressed: () => model.openItemDetailView(context, index),
+                child: Text(
+                  'Detail',
+                  style: AppTextStyle.mainButtonTextStyle(context),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -61,7 +61,7 @@ class AppTextStyle {
     return TextStyle(
       fontSize: 29,
       fontWeight: FontWeight.w500,
-      height: 44 / 29,
+      height: 29 / 29,
       color: color ?? AppColors.black,
     );
   }
@@ -90,7 +90,7 @@ class AppTextStyle {
       fontSize: 15,
       fontWeight: FontWeight.w600,
       height: 23 / 15,
-      color: color ?? AppColors.priceColor,
+      color: color ?? AppColors.secondBlack,
     );
   }
 
@@ -108,7 +108,16 @@ class AppTextStyle {
       fontSize: 15,
       fontWeight: FontWeight.w400,
       height: 23 / 15,
-      color: color ?? AppColors.priceColor,
+      color: color ?? AppColors.black,
+    );
+  }
+
+  static TextStyle buyButtonStyle(BuildContext context, {Color? color}) {
+    return TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.w500,
+      height: 30 / 20,
+      color: color ?? AppColors.white,
     );
   }
 }

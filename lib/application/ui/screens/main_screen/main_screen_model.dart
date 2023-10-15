@@ -72,7 +72,12 @@ class MainScreenModel extends ChangeNotifier {
         const Color.fromRGBO(55, 57, 58, 1.0): "Black Titanium",
       },
       imagesUrls: [
-        "https://www.apple.com/v/iphone-15/b/images/overview/contrast/iphone_15pro__ezc4eofw13yq_large.jpg"
+        "https://www.apple.com/v/iphone-15/b/images/overview/contrast/iphone_15pro__ezc4eofw13yq_large.jpg",
+        "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-finish-select-202309-6-1inch_GEO_US?wid=2560&hei=1440&fmt=p-jpg&qlt=80&.v=1693009279082",
+        "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-finish-select-202309-6-1inch_AV1?wid=2560&hei=1440&fmt=p-jpg&qlt=80&.v=1693009275111",
+        "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-finish-select-202309-6-1inch_AV2_GEO_US?wid=2560&hei=1440&fmt=p-jpg&qlt=80&.v=1693009275344",
+        "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-finish-select-202309-6-1inch_AV3?wid=2560&hei=1440&fmt=p-jpg&qlt=80&.v=1693009275207",
+        "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-finish-select-202309-6-1inch_AV4?wid=2560&hei=1440&fmt=p-jpg&qlt=80&.v=1693009276702",
       ],
       availableMemory: ["128GB", "256GB", "512GB", "1TB"],
       price: 999,
