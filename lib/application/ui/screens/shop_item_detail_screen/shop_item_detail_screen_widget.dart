@@ -195,7 +195,7 @@ class _MainImageWidget extends StatelessWidget {
         //   ),
         // ),
         Hero(
-          tag: imagesUrls[selectedImageId],
+          tag: '${imagesUrls[selectedImageId]}$selectedImageId',
           child: AnimatedSwitcher(
             duration: const Duration(milliseconds: 250),
             switchInCurve: Curves.easeInOut,
@@ -236,11 +236,13 @@ class _MainInformationMenuWidget extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    config.title,
-                    style: AppTextStyle.titleDetailStyle(
-                      context,
-                      color: Colors.black,
+                  Expanded(
+                    child: Text(
+                      config.title,
+                      style: AppTextStyle.titleDetailStyle(
+                        context,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -289,7 +291,7 @@ class _MainInformationMenuWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 33),
               child: Text(
-                'MEMORY:',
+                'CONFIGURATION:',
                 style: AppTextStyle.descriptionDetailStyle(
                   context,
                 ),

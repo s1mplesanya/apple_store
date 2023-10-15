@@ -62,22 +62,68 @@ class _SliverGridWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shopList = context.read<MainScreenModel>().shopList;
+    final shopList =
+        context.select((MainScreenModel model) => model.selectedShopList);
+    final isLoading = context.read<MainScreenModel>().isLoading;
 
-    return SliverGrid(
-      delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) {
-          return _ShopListItemWidget(index);
-        },
-        childCount: shopList.length,
-      ),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 17,
-        mainAxisSpacing: 22,
-        childAspectRatio: 0.7,
-      ),
-    );
+    late Widget finalWidget;
+
+    if (isLoading == true) {
+      finalWidget = const SliverFillRemaining(
+        child: SizedBox(
+          width: 50,
+          height: 50,
+          child: Center(
+            child: CircularProgressIndicator(
+              color: AppColors.secondBlack,
+            ),
+          ),
+        ),
+      );
+    } else if (shopList.isEmpty) {
+      finalWidget = SliverFillRemaining(
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                AppSvg.warning,
+                color: AppColors.secondBlack,
+                width: 40,
+                height: 40,
+              ),
+              const SizedBox(
+                height: 14,
+              ),
+              Text(
+                'Out of stock!',
+                style: AppTextStyle.outOfStockStyle(
+                  context,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    } else {
+      finalWidget = SliverGrid(
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            return _ShopListItemWidget(index);
+          },
+          childCount: shopList.length,
+        ),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 17,
+          mainAxisSpacing: 22,
+          childAspectRatio: 0.7,
+        ),
+      );
+    }
+
+    return finalWidget;
   }
 }
 
@@ -88,7 +134,7 @@ class _ShopListItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = context.read<MainScreenModel>();
-    final config = context.read<MainScreenModel>().shopList[index];
+    final config = context.read<MainScreenModel>().selectedShopList[index];
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -104,7 +150,7 @@ class _ShopListItemWidget extends StatelessWidget {
               height: 15,
             ),
             Hero(
-              tag: config.imagesUrls[0],
+              tag: '${config.imagesUrls[0]}$index',
               child: SizedBox(
                 height: 83,
                 child: CachedNetworkImage(
@@ -134,6 +180,8 @@ class _ShopListItemWidget extends StatelessWidget {
             Text(
               config.title,
               style: AppTextStyle.itemTitleStyle(context),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(
               height: 5,
@@ -194,7 +242,19 @@ class _SecondListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final secondList = context.read<MainScreenModel>().secondList;
+    final model = context.read<MainScreenModel>();
+
+    // final selectedFirstList = context.read<MainScreenModel>().selectedFirstList;
+    final selectedFirstList =
+        context.select((MainScreenModel model) => model.selectedFirstList);
+    final secondList = context
+        .read<MainScreenModel>()
+        .secondList
+        .where((item) =>
+            item.deviceType ==
+                model.getDeviceTypeFromIndex(selectedFirstList) ||
+            item.deviceType == DeviceType.all)
+        .toList();
     return SizedBox(
       height: 35, // fix
       child: ListView.separated(
@@ -206,7 +266,7 @@ class _SecondListWidget extends StatelessWidget {
               left: index == 0 ? 25 : 0,
               right: index == secondList.length - 1 ? 25 : 0,
             ),
-            child: _SecondListItemWidget(index),
+            child: _SecondListItemWidget(secondList[index]),
           );
         },
         separatorBuilder: (BuildContext context, int index) {
@@ -220,20 +280,27 @@ class _SecondListWidget extends StatelessWidget {
 }
 
 class _SecondListItemWidget extends StatelessWidget {
-  final int index;
-  const _SecondListItemWidget(this.index);
+  final SecondListItemConfiguration configuration;
+  const _SecondListItemWidget(this.configuration);
 
   @override
   Widget build(BuildContext context) {
     final model = context.read<MainScreenModel>();
 
-    final secondList = context.read<MainScreenModel>().secondList;
-
     final selectedSecondList =
         context.select((MainScreenModel model) => model.selectedSecondList);
+
+    // final selectedFirstList = context.read<MainScreenModel>().selectedFirstList;
+    final secondList = context.read<MainScreenModel>().secondList;
+
+    final index = secondList
+        .indexWhere((element) => element.title == configuration.title);
+
     return GestureDetector(
       onTap: () => model.updateSecondList(index),
-      child: DecoratedBox(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
+        curve: Curves.decelerate,
         decoration: BoxDecoration(
           color:
               selectedSecondList == index ? AppColors.black : AppColors.white,
@@ -247,7 +314,7 @@ class _SecondListItemWidget extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                secondList[index].title,
+                configuration.title,
                 style: AppTextStyle.list2TextStyle(
                   context,
                   color: selectedSecondList == index
@@ -307,7 +374,9 @@ class _FirstListItemWidget extends StatelessWidget {
         context.select((MainScreenModel model) => model.selectedFirstList);
     return GestureDetector(
       onTap: () => model.updateFirstList(index),
-      child: DecoratedBox(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.decelerate,
         decoration: BoxDecoration(
           color: selectedFirstList == index ? AppColors.black : AppColors.white,
           borderRadius: BorderRadius.circular(13),

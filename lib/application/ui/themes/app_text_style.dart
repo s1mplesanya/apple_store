@@ -120,4 +120,14 @@ class AppTextStyle {
       color: color ?? AppColors.white,
     );
   }
+
+  static TextStyle outOfStockStyle(BuildContext context, {Color? color}) {
+    return TextStyle(
+      fontSize: 13,
+      fontWeight: FontWeight.w500,
+      height: 16 / 13,
+      letterSpacing: 0.03,
+      color: color ?? AppColors.black,
+    );
+  }
 }

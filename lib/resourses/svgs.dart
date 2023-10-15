@@ -5,4 +5,6 @@ class AppSvg {
   static const String iphone = 'assets/svgs/iphone.svg';
   static const String watch = 'assets/svgs/watch.svg';
   static const String tablet = 'assets/svgs/tablet.svg';
+
+  static const String warning = 'assets/svgs/warning.svg';
 }
